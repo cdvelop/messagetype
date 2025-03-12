@@ -5,18 +5,48 @@ import (
 )
 
 // messageType define el tipo de mensaje
-type messageType string
+type messageType uint8
 
 const (
-	Normal  messageType = "normal"
-	Info    messageType = "info"
-	Error   messageType = "error"
-	Warning messageType = "warn"
-	OK      messageType = "ok"
+	Normal  messageType = iota // 0
+	Info                       // 1
+	Error                      // 2
+	Warning                    // 3
+	OK                         // 4
 )
 
-// Función para detectar el tipo de mensaje basado en su contenido
-func DetectMessageType(content string) messageType {
+// DetectMessageType detecta el tipo de mensaje basado en su contenido
+// Acepta múltiples argumentos de cualquier tipo, procesando strings y errores
+func DetectMessageType(args ...any) messageType {
+	// Si no hay argumentos, retornar Normal
+	if len(args) == 0 {
+		return Normal
+	}
+
+	// Procesar cada argumento
+	for _, arg := range args {
+		switch v := arg.(type) {
+		case string:
+			if v == "" {
+				continue
+			}
+			result := detectFromString(v)
+			if result != Normal {
+				return result
+			}
+		case error:
+			if v != nil {
+				// Los errores siempre se consideran de tipo Error
+				return Error
+			}
+		}
+	}
+
+	return Normal
+}
+
+// detectFromString analiza una cadena para determinar el tipo de mensaje
+func detectFromString(content string) messageType {
 	lowerContent := tinystring.Convert(content).ToLower().String()
 
 	// Detectar errores

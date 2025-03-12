@@ -32,6 +32,10 @@ msgType := messagetype.DetectMessageType(message)
 if msgType == messagetype.Error {
     // Handle error message
 }
+
+// Multiple arguments
+msgType := messagetype.DetectMessageType("Processing", err, "Completed")
+// Returns Error (highest priority)
 ```
 
 ## Detection Logic
