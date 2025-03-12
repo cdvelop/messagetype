@@ -4,11 +4,11 @@ import (
 	"github.com/cdvelop/tinystring"
 )
 
-// messageType define el tipo de mensaje
-type messageType uint8
+// MessageType define el tipo de mensaje
+type MessageType uint8
 
 const (
-	Normal  messageType = iota // 0
+	Normal  MessageType = iota // 0
 	Info                       // 1
 	Error                      // 2
 	Warning                    // 3
@@ -17,7 +17,7 @@ const (
 
 // DetectMessageType detecta el tipo de mensaje basado en su contenido
 // Acepta múltiples argumentos de cualquier tipo, procesando strings y errores
-func DetectMessageType(args ...any) messageType {
+func DetectMessageType(args ...any) MessageType {
 	// Si no hay argumentos, retornar Normal
 	if len(args) == 0 {
 		return Normal
@@ -30,10 +30,9 @@ func DetectMessageType(args ...any) messageType {
 			if v == "" {
 				continue
 			}
-			result := detectFromString(v)
-			if result != Normal {
-				return result
-			}
+
+			return detectFromString(v)
+
 		case error:
 			if v != nil {
 				// Los errores siempre se consideran de tipo Error
@@ -46,7 +45,7 @@ func DetectMessageType(args ...any) messageType {
 }
 
 // detectFromString analiza una cadena para determinar el tipo de mensaje
-func detectFromString(content string) messageType {
+func detectFromString(content string) MessageType {
 	lowerContent := tinystring.Convert(content).ToLower().String()
 
 	// Detectar errores
