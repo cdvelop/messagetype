@@ -4,7 +4,13 @@ import (
 	"github.com/cdvelop/tinystring"
 )
 
-// MessageType define el tipo de mensaje
+// MessageType represents the classification of message types in the system.
+// Available types:
+// - Normal (0): Standard message without special formatting
+// - Info (1): Informational message usually displayed with distinct styling
+// - Error (2): Error message indicating failures or critical issues
+// - Warning (3): Warning message indicating potential issues
+// - OK (4): Success or confirmation message
 type MessageType uint8
 
 const (
@@ -15,15 +21,15 @@ const (
 	OK                         // 4
 )
 
-// DetectMessageType detecta el tipo de mensaje basado en su contenido
-// Acepta múltiples argumentos de cualquier tipo, procesando strings y errores
+// DetectMessageType detects the message type based on its content
+// Accepts multiple arguments of any type, processing strings and errors
 func DetectMessageType(args ...any) MessageType {
-	// Si no hay argumentos, retornar Normal
+	// If there are no arguments, return Normal
 	if len(args) == 0 {
 		return Normal
 	}
 
-	// Procesar cada argumento
+	// Process each argument
 	for _, arg := range args {
 		switch v := arg.(type) {
 		case string:
@@ -35,7 +41,7 @@ func DetectMessageType(args ...any) MessageType {
 
 		case error:
 			if v != nil {
-				// Los errores siempre se consideran de tipo Error
+				// Errors are always considered Error type
 				return Error
 			}
 		}
@@ -44,11 +50,11 @@ func DetectMessageType(args ...any) MessageType {
 	return Normal
 }
 
-// detectFromString analiza una cadena para determinar el tipo de mensaje
+// detectFromString analyzes a string to determine the message type
 func detectFromString(content string) MessageType {
 	lowerContent := tinystring.Convert(content).ToLower().String()
 
-	// Detectar errores
+	// Detect errors
 	if tinystring.Contains(lowerContent, "error") ||
 		tinystring.Contains(lowerContent, "failed") ||
 		tinystring.Contains(lowerContent, "exit status 1") ||
@@ -58,13 +64,13 @@ func detectFromString(content string) MessageType {
 		return Error
 	}
 
-	// Detectar advertencias
+	// Detect warnings
 	if tinystring.Contains(lowerContent, "warning") ||
 		tinystring.Contains(lowerContent, "warn") {
 		return Warning
 	}
 
-	// Detectar mensajes informativos
+	// Detect informational messages
 	if tinystring.Contains(lowerContent, "info") ||
 		tinystring.Contains(lowerContent, " ...") ||
 		tinystring.Contains(lowerContent, "starting") ||
