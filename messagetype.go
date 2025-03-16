@@ -4,26 +4,26 @@ import (
 	"github.com/cdvelop/tinystring"
 )
 
-// MessageType represents the classification of message types in the system.
+// Type represents the classification of message types in the system.
 // Available types:
 // - Normal (0): Standard message without special formatting
 // - Info (1): Informational message usually displayed with distinct styling
 // - Error (2): Error message indicating failures or critical issues
 // - Warning (3): Warning message indicating potential issues
 // - OK (4): Success or confirmation message
-type MessageType uint8
+type Type uint8
 
 const (
-	Normal  MessageType = iota // 0
-	Info                       // 1
-	Error                      // 2
-	Warning                    // 3
-	OK                         // 4
+	Normal  Type = iota // 0
+	Info                // 1
+	Error               // 2
+	Warning             // 3
+	OK                  // 4
 )
 
 // DetectMessageType detects the message type based on its content
 // Accepts multiple arguments of any type, processing strings and errors
-func DetectMessageType(args ...any) MessageType {
+func DetectMessageType(args ...any) Type {
 	// If there are no arguments, return Normal
 	if len(args) == 0 {
 		return Normal
@@ -51,7 +51,7 @@ func DetectMessageType(args ...any) MessageType {
 }
 
 // detectFromString analyzes a string to determine the message type
-func detectFromString(content string) MessageType {
+func detectFromString(content string) Type {
 	lowerContent := tinystring.Convert(content).ToLower().String()
 
 	// Detect errors

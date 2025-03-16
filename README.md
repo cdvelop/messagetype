@@ -1,4 +1,4 @@
-# MessageType Package
+# Message Type Package
 
 ## Overview
 The `messagetype` package provides functionality for classifying text messages into different types based on their content. This package is useful for categorizing log messages, user notifications, or any text content that needs to be displayed with appropriate styling or handling.
