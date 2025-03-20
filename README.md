@@ -11,7 +11,7 @@ The package defines the following message types:
 - `Info`: Informational message
 - `Error`: Error message
 - `Warning`: Warning message
-- `OK`: Success/confirmation message
+- `Success`: Success/confirmation message
 
 ## Usage
 

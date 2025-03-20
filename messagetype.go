@@ -10,7 +10,7 @@ import (
 // - Info (1): Informational message usually displayed with distinct styling
 // - Error (2): Error message indicating failures or critical issues
 // - Warning (3): Warning message indicating potential issues
-// - OK (4): Success or confirmation message
+// - Success (4): Success or confirmation message
 type Type uint8
 
 const (
@@ -18,7 +18,7 @@ const (
 	Info                // 1
 	Error               // 2
 	Warning             // 3
-	OK                  // 4
+	Success             // 4
 )
 
 // DetectMessageType detects the message type based on its content
