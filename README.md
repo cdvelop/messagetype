@@ -41,6 +41,48 @@ msgType := messagetype.DetectMessageType("Processing", err, "Completed")
 // Returns Error (highest priority)
 ```
 
+### Using helper methods for type checking
+
+The package provides convenient helper methods for checking message types:
+
+```go
+message := "Starting application..."
+msgType := messagetype.DetectMessageType(message)
+
+// Using helper methods (recommended)
+if msgType.IsInfo() {
+    println("This is an informational message")
+}
+
+if msgType.IsError() {
+    println("This is an error message")
+}
+
+if msgType.IsWarning() {
+    println("This is a warning message")
+}
+
+if msgType.IsSuccess() {
+    println("This is a success message")
+}
+
+if msgType.IsNormal() {
+    println("This is a normal message")
+}
+
+// Get string representation
+println("Message type:", msgType.String())
+```
+
+### Available helper methods
+
+- `IsNormal()` - Returns true if the message type is Normal
+- `IsInfo()` - Returns true if the message type is Info  
+- `IsError()` - Returns true if the message type is Error
+- `IsWarning()` - Returns true if the message type is Warning
+- `IsSuccess()` - Returns true if the message type is Success
+- `String()` - Returns a string representation of the message type
+
 ## Detection Logic
 
 The `DetectMessageType` function analyzes the content of a message and categorizes it based on keywords:
@@ -53,4 +95,4 @@ The `DetectMessageType` function analyzes the content of a message and categoriz
 ## Dependencies
 
 This package depends on:
-- [github.com/cdvelop/tinystring](https://github.com/cdvelop/tinystring) - For efficient string operations
+- [github.com/cdvelop/tinystring](https://github.com/cdvelop/tinystring) - For efficient string operations optimized for TinyGo/WebAssembly environments and minimal binary size

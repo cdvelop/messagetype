@@ -21,6 +21,47 @@ const (
 	Success             // 4
 )
 
+// IsNormal returns true if the message type is Normal
+func (t Type) IsNormal() bool {
+	return t == Normal
+}
+
+// IsInfo returns true if the message type is Info
+func (t Type) IsInfo() bool {
+	return t == Info
+}
+
+// IsError returns true if the message type is Error
+func (t Type) IsError() bool {
+	return t == Error
+}
+
+// IsWarning returns true if the message type is Warning
+func (t Type) IsWarning() bool {
+	return t == Warning
+}
+
+// IsSuccess returns true if the message type is Success
+func (t Type) IsSuccess() bool {
+	return t == Success
+}
+
+// String returns a string representation of the message type
+func (t Type) String() string {
+	switch t {
+	case Info:
+		return "Info"
+	case Error:
+		return "Error"
+	case Warning:
+		return "Warning"
+	case Success:
+		return "Success"
+	default:
+		return "Normal"
+	}
+}
+
 // DetectMessageType detects the message type based on its content
 // Accepts multiple arguments of any type, processing strings and errors
 func DetectMessageType(args ...any) Type {
@@ -52,7 +93,7 @@ func DetectMessageType(args ...any) Type {
 
 // detectFromString analyzes a string to determine the message type
 func detectFromString(content string) Type {
-	lowerContent := tinystring.Convert(content).ToLower().String()
+	lowerContent := tinystring.Convert(content).Low().String()
 
 	// Detect errors
 	if tinystring.Contains(lowerContent, "error") ||
