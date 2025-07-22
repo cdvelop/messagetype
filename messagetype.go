@@ -111,12 +111,19 @@ func detectFromString(content string) Type {
 		return Warning
 	}
 
+	// Detect success messages
+	if tinystring.Contains(lowerContent, "success") ||
+		tinystring.Contains(lowerContent, "completed") ||
+		tinystring.Contains(lowerContent, "successful") ||
+		tinystring.Contains(lowerContent, "done") {
+		return Success
+	}
+
 	// Detect informational messages
 	if tinystring.Contains(lowerContent, "info") ||
 		tinystring.Contains(lowerContent, " ...") ||
 		tinystring.Contains(lowerContent, "starting") ||
-		tinystring.Contains(lowerContent, "initializing") ||
-		tinystring.Contains(lowerContent, "success") {
+		tinystring.Contains(lowerContent, "initializing") {
 		return Info
 	}
 

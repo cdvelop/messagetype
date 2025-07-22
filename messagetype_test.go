@@ -50,4 +50,21 @@ func TestDetectMessageType(t *testing.T) {
 			}
 		}
 	})
+
+	t.Run("Success keywords", func(t *testing.T) {
+		successKeywords := []string{
+			"Success! Operation completed",
+			"success",
+			"Operation completed",
+			"Build successful",
+			"Task done",
+		}
+
+		for _, keyword := range successKeywords {
+			result := DetectMessageType(keyword)
+			if result != Success {
+				t.Errorf("Expected Success for keyword %q, got %v", keyword, result)
+			}
+		}
+	})
 }
